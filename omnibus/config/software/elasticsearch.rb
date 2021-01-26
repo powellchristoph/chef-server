@@ -43,6 +43,7 @@ build do
   delete "#{project_dir}/lib/sigar/*sparc*"
   delete "#{project_dir}/lib/sigar/*freebsd*"
   delete "#{project_dir}/config"
+  delete "#{project_dir}/jdk"
   delete "#{project_dir}/modules/x-pack-ml"
   delete "#{project_dir}/modules/ingest-geoip"
   mkdir  "#{project_dir}/plugins"
