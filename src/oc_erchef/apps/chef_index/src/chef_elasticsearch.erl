@@ -134,7 +134,6 @@ fields_tag() ->
 
 query_string_query_ejson(QueryString) ->
     {<<"query_string">>,{[
-        {<<"lowercase_expanded_terms">>, false},
         {<<"query">>, list_to_binary(QueryString)}
     ]}}.
 

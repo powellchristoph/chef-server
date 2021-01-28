@@ -130,14 +130,13 @@ make_doc_for_del(solr, Id) ->
      Id,
      <<"</id></delete>">>];
 make_doc_for_del(elasticsearch, Id) ->
-    [<<"{\"delete\":{\"_index\":\"chef\",\"_type\":\"object\",\"_id\":\"">>,
+    [<<"{\"delete\":{\"_index\":\"chef\",\"_id\":\"">>,
      Id, <<"\" }}\n">>].
 
 make_doc_for_add(Command = #chef_idx_expand_doc{id = Id, type=Type, search_provider=elasticsearch}) ->
     MetaFieldsPL = meta_fields(Command),
     [jiffy:encode({[{<<"index">>, {[
                                    {<<"_index">>, <<"chef">>},
-                                   {<<"_type">>, <<"object">>},
                                    {<<"_id">>, Id}
                                   ]}}
                    ]}),
