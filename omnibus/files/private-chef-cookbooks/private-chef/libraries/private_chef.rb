@@ -222,6 +222,7 @@ module PrivateChef
         'bootstrap',
         'estatsd',
         'nginx',
+        #'opscode-erchef',
         'ldap',
         'user',
         'haproxy',
@@ -268,6 +269,7 @@ module PrivateChef
       set_target_array_if_not_nil(results['private_chef']['logs'], 'log_retention', PrivateChef['log_retention'])
       set_target_array_if_not_nil(results['private_chef'], 'dark_launch', PrivateChef['dark_launch'])
       set_target_array_if_not_nil(results['private_chef']['opscode-erchef'], 'max_request_size', PrivateChef['opscode_erchef']['max_request_size'])
+
       set_target_array_if_not_nil(results['private_chef'], 'folsom_graphite', PrivateChef['folsom_graphite'])
       set_target_array_if_not_nil(results['private_chef'], 'profiles', PrivateChef['profiles'])
       set_target_array_if_not_nil(results['private_chef'], 'insecure_addon_compat', PrivateChef['insecure_addon_compat'])
@@ -329,6 +331,7 @@ module PrivateChef
       PrivateChef['lb']['api_fqdn'] ||= PrivateChef['api_fqdn']
       PrivateChef['lb']['web_ui_fqdn'] ||= PrivateChef['api_fqdn']
       PrivateChef['nginx']['server_name'] ||= PrivateChef['api_fqdn']
+
       PrivateChef['nginx']['url'] ||= "https://#{PrivateChef['api_fqdn']}"
     end
 
@@ -681,6 +684,7 @@ module PrivateChef
       transform_to_consistent_types
 
       PrivateChef['nginx']['enable_ipv6'] ||= PrivateChef['use_ipv6']
+
 
       generate_config_for_topology(PrivateChef['topology'], node_name)
 

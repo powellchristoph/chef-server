@@ -71,12 +71,19 @@ check_health(ServerVersion) ->
     KeyGen = chef_keygen_cache:status_for_json(),
     Indexing = chef_index:status(),
 
-    StatList = [{<<"server_version">>, ServerVersion},
-                {<<"status">>, ?A2B(Status)},
+    StatList1 = [{<<"status">>, ?A2B(Status)},
                 {<<"upstreams">>, {Pings}},
                 {<<"keygen">>, {KeyGen}},
                 {<<"indexing">>, {Indexing}}],
-    {Status, chef_json:encode({StatList})}.
+
+    IncludeVersion = envy:get(oc_chef_wm, include_version_in_status, boolean),
+    StatList2 =
+        case IncludeVersion of
+            true ->[{<<"server_version">>, ServerVersion} | StatList1];
+            false -> StatList1
+        end,
+
+    {Status, chef_json:encode({StatList2})}.
 
 overall_status(Pings) ->
     case [ Pang || {_, <<"fail">>}=Pang <- Pings ] of
